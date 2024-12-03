@@ -20,14 +20,20 @@
         </form>
         <% if (base64Secret && hexSecret) { %>
         <div class="result">
-            <div class="toggle-container">
-                <input type="checkbox" id="secretToggle" class="toggle-input">
-                <label for="secretToggle" class="toggle-label">
-                    <span class="toggle-label-text">Base64</span>
-                    <span class="toggle-label-text">Hex</span>
-                </label>
+            <h3>Your JWT Secret:</h3>
+            <div class="toggle-wrapper">
+                <div class="toggle-container">
+                    <div class="toggle-option">Base64</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="secretToggle" class="toggle-input">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <div class="toggle-option">Hex</div>
+                </div>
             </div>
-            <textarea id="secretDisplay" readonly></textarea>
+            <div class="secret-container">
+                <textarea id="secretDisplay" readonly></textarea>
+            </div>
             <button onclick="copyToClipboard()" class="cyber-button">
                 <span class="cyber-button__glitch"></span>
                 <span class="cyber-button__tag">R2</span>
@@ -48,21 +54,28 @@
     <div class="scanlines"></div>
 
     <script>
+        // Store secrets in variables
+        const base64Secret = `<%= base64Secret %>`;
+        const hexSecret = `<%= hexSecret %>`;
+        
+        // Get DOM elements
         const secretToggle = document.getElementById('secretToggle');
         const secretDisplay = document.getElementById('secretDisplay');
-        const base64Secret = '<%= base64Secret %>';
-        const hexSecret = '<%= hexSecret %>';
-
+        
+        // Function to update the displayed secret
         function updateSecretDisplay() {
             secretDisplay.value = secretToggle.checked ? hexSecret : base64Secret;
         }
-
-        secretToggle.addEventListener('change', updateSecretDisplay);
-
-        // Initial display
-        updateSecretDisplay();
+        
+        // Add event listener for toggle changes
+        if (secretToggle) {
+            secretToggle.addEventListener('change', updateSecretDisplay);
+            // Initial display
+            updateSecretDisplay();
+        }
 
         function copyToClipboard() {
+            const secretDisplay = document.getElementById('secretDisplay');
             secretDisplay.select();
             document.execCommand('copy');
 

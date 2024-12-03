@@ -366,6 +366,80 @@ body {
     margin-top: 20px;
 }
 
+.toggle-wrapper {
+    margin: 20px 0;
+}
+
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.toggle-option {
+    color: var(--text-color);
+    font-size: 14px;
+    font-family: 'Share Tech Mono', monospace;
+    text-transform: uppercase;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 28px;
+}
+
+.toggle-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--primary-color);
+    transition: 0.4s;
+    border-radius: 28px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 3px;
+    background-color: var(--primary-color);
+    transition: 0.4s;
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+.toggle-input:checked + .toggle-slider {
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+.toggle-input:checked + .toggle-slider:before {
+    transform: translateX(32px);
+}
+
+.toggle-slider:hover:before {
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.secret-container {
+    margin: 15px 0;
+}
+
 textarea {
     width: 100%;
     height: 100px;
@@ -462,59 +536,6 @@ footer a:hover {
     z-index: 2147483647;
 }
 
-/* Add these new styles for the toggle switch */
-.toggle-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.toggle-input {
-    display: none;
-}
-
-.toggle-label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100px;
-    height: 34px;
-    background-color: var(--secondary-color);
-    border-radius: 17px;
-    position: relative;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.toggle-label::after {
-    content: '';
-    position: absolute;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    top: 4px;
-    left: 4px;
-    transition: transform 0.3s;
-}
-
-.toggle-input:checked + .toggle-label::after {
-    transform: translateX(66px);
-}
-
-.toggle-label-text {
-    color: var(--text-color);
-    font-size: 12px;
-    padding: 0 10px;
-    z-index: 1;
-}
-
-.toggle-label:hover::after {
-    box-shadow: 0 0 10px var(--primary-color);
-}
-
-
 @media (max-width: 600px) {
     .container {
         width: 95%;
@@ -536,19 +557,21 @@ footer a:hover {
     footer {
         font-size: 12px;
     }
-    .toggle-label {
-        width: 80px;
-        height: 30px;
+    .toggle-option {
+        font-size: 12px;
     }
-    .toggle-label::after {
-        width: 22px;
-        height: 22px;
+    .toggle-switch {
+        width: 50px;
+        height: 24px;
     }
-    .toggle-input:checked + .toggle-label::after {
-        transform: translateX(50px);
+    .toggle-slider:before {
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 3px;
     }
-    .toggle-label-text {
-        font-size: 10px;
+    .toggle-input:checked + .toggle-slider:before {
+        transform: translateX(26px);
     }
 }
 
@@ -562,19 +585,21 @@ footer a:hover {
         height: 35px;
         line-height: 35px;
     }
-    .toggle-label {
-        width: 70px;
-        height: 26px;
+    .toggle-option {
+        font-size: 10px;
     }
-    .toggle-label::after {
-        width: 20px;
+    .toggle-switch {
+        width: 40px;
         height: 20px;
     }
-    .toggle-input:checked + .toggle-label::after {
-        transform: translateX(44px);
+    .toggle-slider:before {
+        height: 14px;
+        width: 14px;
+        left: 3px;
+        bottom: 2px;
     }
-    .toggle-label-text {
-        font-size: 9px;
+    .toggle-input:checked + .toggle-slider:before {
+        transform: translateX(20px);
     }
 }
 
