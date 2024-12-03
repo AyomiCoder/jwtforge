@@ -15,8 +15,17 @@ let temporarySecret = null;
 // Default route
 app.get('/', (req, res) => {
     const secret = temporarySecret; // Use the stored secret if available
+    let base64Secret = null;
+    let hexSecret = null;
+
+    if (secret) {
+        // Encode secret in Base64 and Hex formats
+        base64Secret = Buffer.from(secret, 'hex').toString('base64');
+        hexSecret = secret; // Hex format is already stored in temporarySecret
+    }
+
     temporarySecret = null; // Clear the secret after rendering
-    res.render('index', { secret }); // Render the page with or without the secret
+    res.render('index', { base64Secret, hexSecret }); // Render the page with both encoded secrets
 });
 
 // Route to generate a new secret

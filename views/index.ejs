@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JWT Forge</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1 class="glitch" data-text="JWT Forge">JWT Forge</h1>
-        <p>Generate a cryptographically secure JWT secret:</p>
+        <p>Generate cryptographically secure JWT secrets:</p>
         <form action="/generate" method="get">
             <button type="submit" class="cyber-button">
                 <span class="cyber-button__glitch"></span>
@@ -18,10 +18,16 @@
                 Generate Secret
             </button>
         </form>
-        <% if (secret) { %>
+        <% if (base64Secret && hexSecret) { %>
         <div class="result">
-            <h3>Your JWT Secret:</h3>
-            <textarea id="jwtSecret" readonly><%= secret %></textarea>
+            <div class="toggle-container">
+                <input type="checkbox" id="secretToggle" class="toggle-input">
+                <label for="secretToggle" class="toggle-label">
+                    <span class="toggle-label-text">Base64</span>
+                    <span class="toggle-label-text">Hex</span>
+                </label>
+            </div>
+            <textarea id="secretDisplay" readonly></textarea>
             <button onclick="copyToClipboard()" class="cyber-button">
                 <span class="cyber-button__glitch"></span>
                 <span class="cyber-button__tag">R2</span>
@@ -42,9 +48,22 @@
     <div class="scanlines"></div>
 
     <script>
+        const secretToggle = document.getElementById('secretToggle');
+        const secretDisplay = document.getElementById('secretDisplay');
+        const base64Secret = '<%= base64Secret %>';
+        const hexSecret = '<%= hexSecret %>';
+
+        function updateSecretDisplay() {
+            secretDisplay.value = secretToggle.checked ? hexSecret : base64Secret;
+        }
+
+        secretToggle.addEventListener('change', updateSecretDisplay);
+
+        // Initial display
+        updateSecretDisplay();
+
         function copyToClipboard() {
-            const textArea = document.getElementById('jwtSecret');
-            textArea.select();
+            secretDisplay.select();
             document.execCommand('copy');
 
             const notification = document.getElementById('copyNotification');
