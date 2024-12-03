@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Forge</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="glitch" data-text="JWT Forge">JWT Forge</h1>
+        <p>Generate a cryptographically secure JWT secret:</p>
+        <form action="/generate" method="get">
+            <button type="submit" class="cyber-button">
+                <span class="cyber-button__glitch"></span>
+                <span class="cyber-button__tag">R1</span>
+                Generate Secret
+            </button>
+        </form>
+        <% if (secret) { %>
+        <div class="result">
+            <h3>Your JWT Secret:</h3>
+            <textarea id="jwtSecret" readonly><%= secret %></textarea>
+            <button onclick="copyToClipboard()" class="cyber-button">
+                <span class="cyber-button__glitch"></span>
+                <span class="cyber-button__tag">R2</span>
+                Copy to Clipboard
+            </button>
+        </div>
+        <% } %>
+    </div>
+
+    <div id="copyNotification" class="notification hidden">
+        Secret copied to clipboard!
+    </div>
+
+    <footer>
+        <p>Forged with <span class="heart">❤️</span> by <a href="https://x.com/ayomicoder" target="_blank">ayo.</a></p>
+    </footer>
+
+    <div class="scanlines"></div>
+
+    <script>
+        function copyToClipboard() {
+            const textArea = document.getElementById('jwtSecret');
+            textArea.select();
+            document.execCommand('copy');
+
+            const notification = document.getElementById('copyNotification');
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
